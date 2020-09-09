@@ -1,0 +1,31 @@
+<div class="container-fluid p-4">
+  <div class="row justify-content-center">
+    <div class="col">
+      <h3>Impresores</h3>
+      <input class="form-control mt-2 mb-2" type="text" placeholder="Buscar.." (keyup)="onKey($event)">
+      <ul style="list-style-type: none; padding: 0">
+        <li *ngFor="let author of authors; let i = index" class="animated fadeInLeft">
+          <button (click)="showImages(author, i)" [class.active]="selectedIndex === i" type="button" class="btn btn-dark btn-block mb-2">{{ author.author_name }} </button>
+        </li>
+      </ul>
+      <ngb-pagination [collectionSize]="totalAuthors" [pageSize]="itemsPerPage" [(page)]="page" [maxSize]="10" [rotate]="true" (pageChange)="loadPage($event)" style="width: 100%"></ngb-pagination>
+    </div>
+    <div class="col animated fadeInRight" [class.display-none]="selectedIndex == null">
+      <h3>Imágenes {{currentAuthor}}</h3>
+      <ul class="cardo-list">
+        <li class="cardo" *ngFor="let image of authorImages" style="cursor: pointer" >
+          <a [routerLink]="['/similar']" [state]="{ data: image}">
+            <div class="cardo-image" [style.backgroundImage]="'url(https://frozen-plains-74809.herokuapp.com/media/'+ image.file_name +')'">
+              <img src="https://frozen-plains-74809.herokuapp.com/media/{{image.file_name}}"/>
+            </div>
+            <div class="cardo-description">
+              <span class="badge-pill badge-secondary mr-1" *ngFor="let tag of image.tags" style="text-transform: capitalize;">
+                {{ tag.name }}
+              </span>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

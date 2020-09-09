@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h3>{{ author.autor_name }}</h3>
+<ul>
+    {% for image in images %}
+        <li>
+            <p>
+            {% for tag in image.tags %}
+                {{ tag.name }} ,
+            {% endfor %}
+            </p>
+            <p><a href="{% url 'show_author' author_pk=image.author.pk %}">{{ image.author.autor_name }}</a></p>
+            <a href="{% url 'similar' img_index=image.image_id num=5 %}"><img src="/media/{{ image.file_name }}" alt="" width="400" ></a>
+        </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}
+
+

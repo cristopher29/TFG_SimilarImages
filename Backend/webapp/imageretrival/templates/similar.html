@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+<script>
+    function searchSimilar() {
+        id = document.getElementById("original_id").innerText;
+        num = document.getElementById("num_images").value;
+        console.log(id);
+        console.log(num);
+        window.location.href = "http://127.0.0.1:8000/similar/"+id+"/"+num;
+    }
+</script>
+<h3>Original</h3>
+<p id="original_id">{{ orignal.image_id }}</p>
+<p>
+{% for tag in orignal.tags %}
+    {{ tag.name }} ,
+{% endfor %}
+</p>
+<img src="/media/{{ orignal.file_name }}" alt="" width="400" >
+<hr>
+<div>
+    <input type="number" placeholder="Num. images" id="num_images">
+    <button id="buscar" onclick="searchSimilar()">Buscar</button>
+</div>
+{% if similar_imgs %}
+    <ul>
+    {% for image in similar_imgs %}
+        <li>
+            <p>
+            {% for tag in image.tags %}
+                {{ tag.name }} ,
+            {% endfor %}
+            </p>
+            <p><a href="{% url 'show_autor' autor_pk=image.autor.pk %}">{{ image.autor.autor_name }}</a></p>
+            <p>{{ image.image_id }}</p>
+            <a href="{% url 'similar' img_index=image.image_id num=5 %}"><img src="/media/{{ image.file_name }}" alt="" width="400" ></a>
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>RIP.</p>
+{% endif %}
+
+{% endblock %}

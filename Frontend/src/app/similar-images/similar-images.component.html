@@ -1,0 +1,49 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col text-center">
+      <h2 class="title">Imágenes similares </h2>
+      <img src="https://frozen-plains-74809.herokuapp.com/media/{{originalFilename}}" height="200" alt="">
+    </div>
+  </div>
+  <div class="row justify-content-center">
+    <div class="form-inline mt-4 mb-3">
+      <div class="form-group mb-2 mr-2">
+        <h5 for="num_images" class="mr-2">Número de Imágenes </h5>
+        <input type="number" class="form-control" value="{{numImages}}" id="num_images">
+      </div>
+      <button class="btn btn-dark" style="margin-top: -12px" (click)="applySetting()" [disabled]="currentImageId == 0">Aplicar</button>
+    </div>
+    <div class="form-row">
+      <!--          <div class="col">-->
+      <!--            <label for="threshold">Threshold</label>-->
+      <!--            <input type="number" class="form-control" min="1" max="100" value="{{threshold}}" id="threshold">-->
+      <!--          </div>-->
+    </div>
+  </div>
+  <div class="row justify-content-center">
+    <div class="mb-4">
+      <div class="col text-center">
+        <h4 *ngIf="tagsList.length > 0">Filtrar</h4>
+      </div>
+      <div class="button-group filter-button-group">
+        <button class="btn-sm btn-dark mr-2" data-filter="*" id="all-filter">Todos</button>
+        <button style="text-transform: capitalize;" class="btn-sm btn-dark mr-2 ml-2" *ngFor="let tag of tagsList" [attr.data-filter]="'.'+tag">{{tag}}</button>
+      </div>
+    </div>
+  </div>
+  <div class="">
+    <div class="grid row text-center text-lg-left">
+      <div class=" grid-item {{imageTag(image)}} col-4 mb-4" *ngFor="let image of similarImages" >
+        <div class="card" style="box-shadow: 0 0 3rem -1rem rgba(0,0,0,0.5);">
+          <img class="card-img-top img-responsive" src="https://frozen-plains-74809.herokuapp.com/media/{{image.file_name}}">
+          <div class="card-body">
+            <h4 class="card-title">{{image.author.author_name }}</h4>
+            <span class="badge-pill badge-secondary mr-1" *ngFor="let tag of image.tags" style="text-transform: capitalize;">
+              {{ tag.name }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

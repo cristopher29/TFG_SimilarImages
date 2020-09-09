@@ -1,0 +1,25 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark p-4">
+    <a class="navbar-brand ml-3" [routerLink]="['home']">Marcas de impresores</a>
+    <button class="navbar-toggler hidden-sm-up" type="button" (click)="isNavbarCollapsed = !isNavbarCollapsed" aria-controls="exCollapsingNavbar2" aria-expanded="false" aria-label="Toggle navigation">
+      &#9776;
+    </button>
+    <div [ngbCollapse]="isNavbarCollapsed" class="collapse navbar-collapse navbar-toggleable-xs" id="exCollapsingNavbar2">
+      <ul class="nav navbar-nav">
+        <li class="nav-item active">
+<!--          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>-->
+        </li>
+      </ul>
+    </div>
+</nav>
+
+<div class="page-wrapper bg-light">
+  <router-outlet></router-outlet>
+</div>
+
+<footer>
+  <div class="row text-center p-5">
+    <div class="col">
+      <img src="https://crai.ub.edu/sites/default/files/impressors/barracrai.gif" alt="">
+    </div>
+  </div>
+</footer>

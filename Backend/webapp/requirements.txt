@@ -1,0 +1,11 @@
+Django
+Pillow
+annoy
+django-cors-headers
+django-tagging
+djangorestframework
+pandas
+scipy
+psycopg2
+whitenoise
+gunicorn
