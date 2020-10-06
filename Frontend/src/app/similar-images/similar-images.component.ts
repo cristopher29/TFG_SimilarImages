@@ -16,10 +16,11 @@ export class SimilarImagesComponent implements OnInit, AfterViewInit {
   numImages = 5;
   threshold = 1;
   similarImages: any = [];
-  currentImageId = 0;
   $grid = null;
   grid = false;
-  originalFilename = null;
+  originalImage = null;
+  page = null;
+  selectedIndex = null;
 
   constructor(private apiService: ApiService) { }
 
@@ -33,10 +34,12 @@ export class SimilarImagesComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.tagsList = [];
     // tslint:disable-next-line:radix
-    this.originalFilename = history.state.data.file_name;
-    this.currentImageId = history.state.data.image_id;
+    this.originalImage = history.state.data;
+    this.selectedIndex = history.state.index;
+    this.page = history.state.page;
+    console.log(this.originalImage)
     this.apiService.similarImages({
-      id: this.currentImageId,
+      id: this.originalImage.image_id,
       threshold: this.threshold / 100,
       num: this.numImages
     }).toPromise().then(value => {
@@ -88,12 +91,12 @@ export class SimilarImagesComponent implements OnInit, AfterViewInit {
   }
 
   public applySetting(): void {
-    console.log(this.currentImageId);
+    console.log(this.originalImage.image_id);
     this.tagsList = [];
     // tslint:disable-next-line:radix
     this.numImages = parseInt($('#num_images').val());
     this.apiService.similarImages({
-      id: this.currentImageId,
+      id: this.originalImage.image_id,
       threshold: this.threshold / 100,
       num: this.numImages
     }).subscribe(value => {

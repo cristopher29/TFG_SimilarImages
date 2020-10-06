@@ -1,8 +1,20 @@
 <div class="container">
+  <nav aria-label="breadcrumb" class="pt-4">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a [routerLink]="['/home']" [state]="{ page: page, index: selectedIndex}">Inicio</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Similares</li>
+    </ol>
+  </nav>
   <div class="row justify-content-center">
     <div class="col text-center">
       <h2 class="title">Imágenes similares </h2>
-      <img src="https://frozen-plains-74809.herokuapp.com/media/{{originalFilename}}" height="200" alt="">
+      <div>
+        <span class="badge-pill badge-secondary mr-1" *ngFor="let tag of originalImage.tags" style="text-transform: capitalize;">
+        {{ tag.name }}
+      </span>
+      </div>
+
+      <img src="https://frozen-plains-74809.herokuapp.com/media/{{originalImage.file_name}}" height="200" alt="">
     </div>
   </div>
   <div class="row justify-content-center">
@@ -11,7 +23,7 @@
         <h5 for="num_images" class="mr-2">Número de Imágenes </h5>
         <input type="number" class="form-control" value="{{numImages}}" id="num_images">
       </div>
-      <button class="btn btn-dark" style="margin-top: -12px" (click)="applySetting()" [disabled]="currentImageId == 0">Aplicar</button>
+      <button class="btn btn-dark" style="margin-top: -12px" (click)="applySetting()" [disabled]="originalImage.image_id == 0">Aplicar</button>
     </div>
     <div class="form-row">
       <!--          <div class="col">-->

@@ -14,20 +14,25 @@ export class HomeComponent implements OnInit {
   authorSearch = '';
   currentAuthor = '';
   totalAuthors = 0;
-  itemsPerPage = 5;
-  page = 1;
+  itemsPerPage = 10;
+  page = null;
   selectedIndex: number = null;
-
+  isBack = false;
 
   constructor(private apiService: ApiService, private router: Router) { }
 
   public ngOnInit(): void {
-    let tempAuthor = null;
+    this.page = 1;
+    if (history.state.page){
+      this.page = history.state.page;
+      this.isBack = true;
+    }
     this.apiService.authorsPage(this.page, '').subscribe(value => {
       this.authors = value.results;
       this.totalAuthors = value.total;
       this.page = value.page;
-      tempAuthor = this.showImages(this.authors[0], 0);
+      this.selectedIndex = history.state.index ? history.state.index : 0;
+      this.showImages(this.authors[this.selectedIndex], this.selectedIndex);
     });
   }
 
@@ -53,24 +58,30 @@ export class HomeComponent implements OnInit {
     this.currentAuthor = author.author_name;
     this.authorImages = author.image;
     this.selectedIndex = index;
+    console.log(this.currentAuthor, this.authorImages, this.selectedIndex);
   }
 
 
   loadPage(page: number) {
-    this.selectedIndex = null;
-    if (this.authorSearch === '') {
-      this.apiService.authorsPage(page, '').subscribe(value => {
-        this.authors = value.results;
-        this.totalAuthors = value.total;
-        this.page = page;
-      });
-    } else {
-      this.apiService.authorsPage(page, this.authorSearch).subscribe(value => {
-        this.authors = value.results;
-        this.totalAuthors = value.total;
-        this.page = page;
-      });
+    if (this.isBack){
+      this.isBack = false;
+    }else{
+      this.selectedIndex = null;
+      if (this.authorSearch === '') {
+        this.apiService.authorsPage(page, '').subscribe(value => {
+          this.authors = value.results;
+          this.totalAuthors = value.total;
+          this.page = page;
+        });
+      } else {
+        this.apiService.authorsPage(page, this.authorSearch).subscribe(value => {
+          this.authors = value.results;
+          this.totalAuthors = value.total;
+          this.page = page;
+        });
+      }
     }
+
   }
 
 }

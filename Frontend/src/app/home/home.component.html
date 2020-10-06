@@ -14,7 +14,7 @@
       <h3>Imágenes {{currentAuthor}}</h3>
       <ul class="cardo-list">
         <li class="cardo" *ngFor="let image of authorImages" style="cursor: pointer" >
-          <a [routerLink]="['/similar']" [state]="{ data: image}">
+          <a [routerLink]="['/similar']" [state]="{ data: image, page: page, index: selectedIndex}">
             <div class="cardo-image" [style.backgroundImage]="'url(https://frozen-plains-74809.herokuapp.com/media/'+ image.file_name +')'">
               <img src="https://frozen-plains-74809.herokuapp.com/media/{{image.file_name}}"/>
             </div>
